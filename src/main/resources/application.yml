@@ -1,6 +1,12 @@
 spring:
   datasource:
-    driver-class-name: org.h2.Driver
-    url: jdbc:h2:mem:test;MODE=MySQL;DB_CLOSE_DELAY=-1
-    initialize: true
-    sql-script-encoding: UTF-8
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/bookstore?characterEncoding=UTF-8&serverTimezone=UTC&useSSL=false&useUnicode=true&useLegacyDatetimeCode=false
+    username: newuser
+    password: supervisor888
+    schema: classpath:schema.sql
+    data: classpath:import.sql
+  jpa:
+    hibernate.ddl-auto: none
+    generate-ddl: false
+    show-sql: true

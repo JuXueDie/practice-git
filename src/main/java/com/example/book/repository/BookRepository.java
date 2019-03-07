@@ -1,10 +1,8 @@
-package com.example.book;
+package com.example.book.repository;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.example.book.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
-import org.springframework.data.rest.core.annotation.RestResource;
 
 @RepositoryRestResource
 public interface BookRepository extends JpaRepository<Book, Integer> {
