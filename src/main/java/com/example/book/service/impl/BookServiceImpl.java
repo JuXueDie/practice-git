@@ -1,0 +1,48 @@
+package com.example.book.service.impl;
+
+import com.example.book.model.Book;
+import com.example.book.repository.BookRepository;
+import com.example.book.service.BookService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+
+@Service
+public class BookServiceImpl implements BookService {
+
+    @Autowired
+    private BookRepository bookRepository;
+
+    @Override
+    public List<Book> getBooks() {
+        return bookRepository.findAll();
+    }
+
+    @Override
+    public boolean addBook(Book book) {
+        bookRepository.save(book);
+        return true;
+    }
+
+    @Override
+    public boolean deleteBook(int bookid) {
+        bookRepository.deleteById(bookid);
+        return true;
+    }
+
+    @Override
+    public boolean editBook(Book book) {
+        int bookid = book.getBookid();
+        Optional<Book> optionalBook = bookRepository.findById(bookid);
+        if (optionalBook.isPresent()) {
+            bookRepository.save(book);
+            return true;
+        }
+        return false;
+    }
+}
+
