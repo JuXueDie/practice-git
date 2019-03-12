@@ -4,7 +4,6 @@ import com.example.book.model.Book;
 import com.example.book.repository.BookRepository;
 import com.example.book.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,6 +42,18 @@ public class BookServiceImpl implements BookService {
             return true;
         }
         return false;
+    }
+
+
+
+    @Override
+    public Book getBook(int bookid) {
+        Book book = null;
+        Optional<Book> optionalBook = bookRepository.findById(bookid);
+        if (optionalBook.isPresent()) {
+            book = optionalBook.get();
+        }
+        return book;
     }
 }
 
