@@ -11,4 +11,6 @@ public interface BookService {
     boolean deleteBook(int bookid);
     boolean editBook(Book book);
     Book getBook(int bookid);
+    Book getBookByName(String name);
+    Book getBookByAuthorAndName(String author, String name);
 }

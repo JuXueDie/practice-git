@@ -6,6 +6,8 @@ import com.example.book.response.BasicSuccessResp;
 import com.example.book.response.ErrorResponse;
 import com.example.book.service.BookService;
 import io.swagger.annotations.ApiOperation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,6 +23,7 @@ import static com.example.book.utils.ResponseErrorCode.BAD_REQUEST;
 @RestController
 @RequestMapping(value = "/api")
 public class BookController {
+    private static final Logger logger = LogManager.getLogger(BookController.class);
 
     @Autowired
     private BookRepository bookRepository;
@@ -63,7 +66,29 @@ public class BookController {
     @ApiOperation(value = "取得一本書籍")
     @GetMapping(value = "/v1/book/{bookid}")
     public ResponseEntity<?> getBook(@PathVariable int bookid) {
+        logger.info("bookid: " + bookid);
         Book book = bookService.getBook(bookid);
+        return getResponseEntity(book);
+    }
+
+    @ApiOperation(value = "用書名找書")
+    @GetMapping(value = "/v1/book/find")
+    public ResponseEntity<?> getBookByName(@RequestParam String name) {
+        logger.info("name: " + name);
+        Book book = bookService.getBookByName(name);
+        return getResponseEntity(book);
+    }
+
+    @ApiOperation(value = "用作者跟書名找書")
+    @GetMapping(value = "/v1/book/finds")
+    public ResponseEntity<?> findByAuthorAndName(@RequestParam String author, @RequestParam String name) {
+        logger.info("author: " + author);
+        logger.info("name: " + name);
+        Book book = bookService.getBookByAuthorAndName(author, name);
+        return getResponseEntity(book);
+    }
+
+    private ResponseEntity<?> getResponseEntity(Book book) {
         if (book == null) {
             ErrorResponse errorResponse = new ErrorResponse(BAD_REQUEST);
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);

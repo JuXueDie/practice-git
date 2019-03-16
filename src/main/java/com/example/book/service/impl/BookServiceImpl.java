@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-
 @Service
 public class BookServiceImpl implements BookService {
 
@@ -50,6 +49,26 @@ public class BookServiceImpl implements BookService {
     public Book getBook(int bookid) {
         Book book = null;
         Optional<Book> optionalBook = bookRepository.findById(bookid);
+        if (optionalBook.isPresent()) {
+            book = optionalBook.get();
+        }
+        return book;
+    }
+
+    @Override
+    public Book getBookByName(String name) {
+        Book book = null;
+        Optional<Book> optionalBook = Optional.ofNullable(bookRepository.findByName(name));
+        if (optionalBook.isPresent()) {
+            book = optionalBook.get();
+        }
+        return book;
+    }
+
+    @Override
+    public Book getBookByAuthorAndName(String author, String name) {
+        Book book = null;
+        Optional<Book> optionalBook = Optional.ofNullable(bookRepository.findByAuthorAndName(author, name));
         if (optionalBook.isPresent()) {
             book = optionalBook.get();
         }

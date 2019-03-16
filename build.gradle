@@ -13,6 +13,11 @@ repositories {
 	mavenCentral()
 }
 
+configurations {
+	providedRuntime
+	compile.exclude module: "spring-boot-starter-logging"
+}
+
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-data-rest')
@@ -20,6 +25,7 @@ dependencies {
 //	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
     implementation 'io.springfox:springfox-swagger2:2.7.0'
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
+	implementation "org.springframework.boot:spring-boot-starter-log4j2"
 	runtimeOnly 'mysql:mysql-connector-java'
 	compileOnly('org.projectlombok:lombok')
 	testCompile('org.springframework.boot:spring-boot-starter-test')

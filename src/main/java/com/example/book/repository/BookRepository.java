@@ -2,10 +2,14 @@ package com.example.book.repository;
 
 import com.example.book.model.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 @RepositoryRestResource
 public interface BookRepository extends JpaRepository<Book, Integer> {
+//    @Query("SELECT n FROM Book n WHERE n.uuid= ?1")
+    Book findByAuthorAndName(String author, String name);
+    Book findByName(String name);
     /*
     // Prevents GET /books/:id
     @Override
