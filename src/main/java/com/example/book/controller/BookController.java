@@ -5,6 +5,7 @@ import com.example.book.repository.BookRepository;
 import com.example.book.response.BasicSuccessResp;
 import com.example.book.response.ErrorResponse;
 import com.example.book.service.BookService;
+import com.example.book.utils.Utils;
 import io.swagger.annotations.ApiOperation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -43,7 +44,7 @@ public class BookController {
     public ResponseEntity<?> addBook(@RequestBody Book body) {
 //        bookRepository.save(book);
         boolean result = bookService.addBook(body);
-        return getResponseEntity(result);
+        return Utils.getResponseEntity(result);
     }
 
     @ApiOperation(value = "砍掉書籍")
@@ -51,7 +52,7 @@ public class BookController {
     public ResponseEntity<?> deleteBook(@PathVariable int bookid) {
 //        bookRepository.deleteById(bookid);
         boolean result = bookService.deleteBook(bookid);
-        return getResponseEntity(result);
+        return Utils.getResponseEntity(result);
     }
 
     @ApiOperation(value = "修改書籍")
@@ -59,7 +60,7 @@ public class BookController {
     public ResponseEntity<?> editBook(@RequestBody Book book, @PathVariable int bookid) {
         book.setBookid(bookid);
         boolean result = bookService.editBook(book);
-        return getResponseEntity(result);
+        return Utils.getResponseEntity(result);
 
     }
 
@@ -96,13 +97,5 @@ public class BookController {
         return new ResponseEntity<>(book, HttpStatus.OK);
     }
 
-    private ResponseEntity<?> getResponseEntity(boolean result) {
-        if (!result) {
-            ErrorResponse errorResponse = new ErrorResponse(BAD_REQUEST);
-            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
-        }
-        BasicSuccessResp resp = new BasicSuccessResp();
-        resp.setSuccess(true);
-        return ResponseEntity.ok(resp);
-    }
+
 }

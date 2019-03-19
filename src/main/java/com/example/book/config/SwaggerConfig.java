@@ -23,17 +23,17 @@ import java.util.List;
 public class SwaggerConfig {
     @Bean
     public Docket createRestApi() {
-//        ParameterBuilder build = new ParameterBuilder();
-//        List<Parameter> pars = new ArrayList<Parameter>();
-//        build.name("Authorization").modelRef(new ModelRef("string")).parameterType("header").description("token").required(true).build();
-//        pars.add(build.build());
+        ParameterBuilder build = new ParameterBuilder();
+        List<Parameter> pars = new ArrayList<Parameter>();
+        build.name("Authorization").modelRef(new ModelRef("string")).parameterType("header").description("token").required(true).build();
+        pars.add(build.build());
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.example.book"))
                 .paths(PathSelectors.any())
 //                .paths(PathSelectors.ant("/api/**"))
                 .build()
-//                .globalOperationParameters(pars)
+                .globalOperationParameters(pars)
                 .apiInfo(apiInfo());
     }
 
