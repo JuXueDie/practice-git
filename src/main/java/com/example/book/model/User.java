@@ -9,32 +9,35 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * @www.codesheep.cn
+ * 20190312
+ */
 @Entity
-public class MyUser implements UserDetails {
+public class User implements UserDetails {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue
+    private Long id;
+
     private String username;
+
     private String password;
 
     @ManyToMany(cascade = {CascadeType.REFRESH},fetch = FetchType.EAGER)
     private List<Role> roles;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-//    public String getUsername() {
-//        return username;
-//    }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public void setUsername(String username) {
         this.username = username;
     }
-
-//    public String getPassword() {
-//        return password;
-//    }
 
     public void setPassword(String password) {
         this.password = password;
@@ -47,6 +50,8 @@ public class MyUser implements UserDetails {
     public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
+
+    // 下面为实现UserDetails而需要的重写方法！
 
     @Override
     public boolean isAccountNonExpired() {
@@ -86,4 +91,5 @@ public class MyUser implements UserDetails {
     public String getPassword() {
         return password;
     }
+
 }

@@ -1,27 +1,32 @@
 package com.example.book.service.impl;
 
-import com.example.book.model.MyUser;
-import com.example.book.repository.MyUserRepository;
+import com.example.book.model.Role;
+import com.example.book.model.User;
+import com.example.book.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import static java.util.Collections.emptyList;
-
+/**
+ * @www.codesheep.cn
+ * 20190312
+ */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
+
     @Autowired
-    private MyUserRepository myUserRepository;
+    UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        MyUser applicationUser = myUserRepository.findByUsername(username);
-        if (applicationUser == null) {
-            throw new UsernameNotFoundException(username);
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+
+        User user = userRepository.findByUsername(s);
+        if (user == null) {
+            throw new UsernameNotFoundException("用户不存在");
         }
-        return new User(applicationUser.getUsername(), applicationUser.getPassword(), emptyList());
+        return user;
     }
+
 }
