@@ -5,11 +5,17 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
+import java.util.List;
+
 @RepositoryRestResource
 public interface BookRepository extends JpaRepository<Book, Integer> {
 //    @Query("SELECT n FROM Book n WHERE n.uuid= ?1")
     Book findByAuthorAndName(String author, String name);
     Book findByName(String name);
+    List<Book> findByAuthor(String author);
+    Book findByUuid(String uuid);
+    void deleteByUuid(String uuid);
+
     /*
     // Prevents GET /books/:id
     @Override

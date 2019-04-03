@@ -1,5 +1,6 @@
 package com.example.book.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,15 +10,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * @www.codesheep.cn
- * 20190312
- */
+
 @Entity
 public class User implements UserDetails {
 
     @Id
     @GeneratedValue
+    @JsonIgnore
     private Long id;
 
     private String username;
@@ -25,6 +24,7 @@ public class User implements UserDetails {
     private String password;
 
     @ManyToMany(cascade = {CascadeType.REFRESH},fetch = FetchType.EAGER)
+    @JsonIgnore
     private List<Role> roles;
 
     public Long getId() {
@@ -53,26 +53,31 @@ public class User implements UserDetails {
 
     // 下面为实现UserDetails而需要的重写方法！
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();

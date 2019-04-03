@@ -1,10 +1,13 @@
 package com.example.book.utils;
 
+import com.example.book.model.Book;
 import com.example.book.response.BasicSuccessResp;
 import com.example.book.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+
 
 import static com.example.book.utils.ResponseErrorCode.BAD_REQUEST;
 
@@ -23,4 +26,13 @@ public class Utils {
         resp.setSuccess(true);
         return ResponseEntity.ok(resp);
     }
+
+    public static ResponseEntity<?> getResponseEntity(Book book) {
+        if (book == null) {
+            ErrorResponse errorResponse = new ErrorResponse(BAD_REQUEST);
+            return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(book, HttpStatus.OK);
+    }
+
 }

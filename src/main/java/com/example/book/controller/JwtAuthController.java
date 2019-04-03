@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * @www.codesheep.cn
- * 20190312
- */
+
 @RestController
 public class JwtAuthController {
 
@@ -31,6 +28,9 @@ public class JwtAuthController {
     }
 
     // 注册
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "Authorization", value = "Authorization token",
+                    required = false, dataType = "string", paramType = "header") })
     @RequestMapping(value = "/authentication/register", method = RequestMethod.POST)
     public User register( @RequestBody User addedUser ) throws AuthenticationException {
         return authService.register(addedUser);

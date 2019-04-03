@@ -18,10 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * @www.codesheep.cn
- * 20190312
- */
+
 @Component
 public class JwtTokenFilter extends OncePerRequestFilter {
 

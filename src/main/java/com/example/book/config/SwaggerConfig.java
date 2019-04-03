@@ -48,7 +48,7 @@ public class SwaggerConfig {
         return newArrayList(
                 SecurityContext.builder()
                         .securityReferences(defaultAuth())
-                        .forPaths(PathSelectors.regex("^(?!login).*$"))
+                        .forPaths(PathSelectors.regex("^(?!auth).*$"))
                         .build()
         );
     }

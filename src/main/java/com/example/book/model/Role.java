@@ -4,10 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-/**
- * @www.codesheep.cn
- * 20190312
- */
+
 @Entity
 public class Role {
 

@@ -1,13 +1,16 @@
 package com.example.book.service.impl;
 
 import com.example.book.model.Book;
+import com.example.book.model.BookRequest;
 import com.example.book.repository.BookRepository;
 import com.example.book.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -21,7 +24,11 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public boolean addBook(Book book) {
+    public boolean addBook(BookRequest bookRequest) {
+        Book book = new Book();
+        book.setUuid(UUID.randomUUID().toString());
+        book.setAuthor(bookRequest.getAuthor());
+        book.setName(bookRequest.getName());
         bookRepository.save(book);
         return true;
     }
@@ -30,6 +37,18 @@ public class BookServiceImpl implements BookService {
     public boolean deleteBook(int bookid) {
         bookRepository.deleteById(bookid);
         return true;
+    }
+
+    @Override
+    public boolean deleteBookByUuid(String uuid) {
+//        bookRepository.deleteByUuid(uuid);
+//        return true;
+        Book bookByUuid = getBookByUuid(uuid);
+        if (bookByUuid != null) {
+            bookRepository.deleteById(bookByUuid.getBookid());
+            return true;
+        }
+        return false;
     }
 
     @Override
@@ -43,6 +62,18 @@ public class BookServiceImpl implements BookService {
         return false;
     }
 
+    @Override
+    public boolean editBookByUuid(Book book) {
+        String uuid = book.getUuid();
+        Book oldBook = getBookByUuid(uuid);
+        if (oldBook != null) {
+            oldBook.setAuthor(book.getAuthor());
+            oldBook.setName(book.getName());
+            bookRepository.save(oldBook);
+            return true;
+        }
+        return false;
+    }
 
 
     @Override
@@ -53,6 +84,11 @@ public class BookServiceImpl implements BookService {
             book = optionalBook.get();
         }
         return book;
+    }
+
+    @Override
+    public Book getBookByUuid(String uuid) {
+        return bookRepository.findByUuid(uuid);
     }
 
     @Override
@@ -72,6 +108,13 @@ public class BookServiceImpl implements BookService {
         if (optionalBook.isPresent()) {
             book = optionalBook.get();
         }
+        return book;
+    }
+
+    @Override
+    public List<Book> getBookByAuthor(String author) {
+        List book = new ArrayList();
+        book = bookRepository.findByAuthor(author);
         return book;
     }
 }
