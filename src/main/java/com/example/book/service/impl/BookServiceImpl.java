@@ -52,10 +52,14 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public boolean editBook(Book book) {
-        int bookid = book.getBookid();
+    public boolean editBook(BookRequest bookRequest, int bookid) {
+        Book book = new Book();
         Optional<Book> optionalBook = bookRepository.findById(bookid);
         if (optionalBook.isPresent()) {
+            book.setAuthor(bookRequest.getAuthor());
+            book.setName(bookRequest.getName());
+            book.setBookid(bookid);
+            book.setUuid(optionalBook.get().getUuid());
             bookRepository.save(book);
             return true;
         }
@@ -63,12 +67,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public boolean editBookByUuid(Book book) {
-        String uuid = book.getUuid();
+    public boolean editBookByUuid(BookRequest bookRequest, String uuid) {
         Book oldBook = getBookByUuid(uuid);
         if (oldBook != null) {
-            oldBook.setAuthor(book.getAuthor());
-            oldBook.setName(book.getName());
+            oldBook.setAuthor(bookRequest.getAuthor());
+            oldBook.setName(bookRequest.getName());
+            oldBook.setUuid(uuid);
             bookRepository.save(oldBook);
             return true;
         }

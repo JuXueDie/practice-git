@@ -11,8 +11,8 @@ public interface BookService {
     boolean addBook(BookRequest book);
     boolean deleteBook(int bookid);
     boolean deleteBookByUuid(String uuid);
-    boolean editBook(Book book);
-    boolean editBookByUuid(Book book);
+    boolean editBook(BookRequest bookRequest, int bookid);
+    boolean editBookByUuid(BookRequest bookRequest, String uuid);
     Book getBook(int bookid);
     Book getBookByUuid(String uuid);
     Book getBookByName(String name);

@@ -72,9 +72,8 @@ public class BookController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @ApiOperation(value = "修改書籍")
     @PutMapping(value = "/v1/book/{bookid}")
-    public ResponseEntity<?> editBook(@RequestBody Book book, @PathVariable int bookid) {
-        book.setBookid(bookid);
-        boolean result = bookService.editBook(book);
+    public ResponseEntity<?> editBook(@RequestBody BookRequest bookRequest, @PathVariable int bookid) {
+        boolean result = bookService.editBook(bookRequest, bookid);
         return Utils.getResponseEntity(result);
 
     }
@@ -82,9 +81,8 @@ public class BookController {
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @ApiOperation(value = "用uuid修改書籍")
     @PutMapping(value = "/v1/book/uuid/{uuid}")
-    public ResponseEntity<?> editBookByUuid(@RequestBody Book book, @PathVariable String uuid) {
-        book.setUuid(uuid);
-        boolean result = bookService.editBookByUuid(book);
+    public ResponseEntity<?> editBookByUuid(@RequestBody BookRequest bookRequest, @PathVariable String uuid) {
+        boolean result = bookService.editBookByUuid(bookRequest, uuid);
         return Utils.getResponseEntity(result);
 
     }
